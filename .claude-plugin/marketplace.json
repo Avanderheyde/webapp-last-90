@@ -1,0 +1,15 @@
+{
+  "name": "webapp-last-90",
+  "owner": { "name": "Avanderheyde" },
+  "metadata": {
+    "description": "The last 90% of shipping a web app — production-readiness as a goal-driven Claude skill.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "last-90",
+      "source": "./",
+      "description": "Finish the unglamorous last 90% of a web app launch: authz, monitoring, legal, backups, rate limits, CI/CD, ops. Goal-driven; checks in only when it needs your accounts."
+    }
+  ]
+}

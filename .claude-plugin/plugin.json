@@ -1,0 +1,7 @@
+{
+  "name": "last-90",
+  "version": "1.0.0",
+  "description": "The last 90% of shipping a web app — everything agents skip: authz, monitoring, legal, backups, rate limits, CI/CD, ops. Run it after you deploy to make the app actually safe and set up properly.",
+  "author": { "name": "Avanderheyde" },
+  "keywords": ["claude-skill", "production-readiness", "launch", "web-app", "security", "vibe-coding", "last-90"]
+}
