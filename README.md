@@ -7,8 +7,15 @@
 
 A goal-driven [Claude](https://claude.com/claude-code) skill. Point it at a freshly
 deployed web app and it scores production-readiness, then **does every fix it can on
-its own**, only stopping to ask you for the things it can't get without you (a Sentry
-DSN, GitHub Actions access, a backup bucket, a legal decision).
+its own**, only stopping to ask you for the things it can't get without you (an
+error-tracker DSN, GitHub Actions access, a backup bucket, a legal decision).
+
+Open source first: monitoring recommendations default to self-hostable tools —
+[Bugsink](https://www.bugsink.com/) or [GlitchTip](https://glitchtip.com/) for error
+tracking (both speak the Sentry SDK protocol, so hosted Sentry is a drop-in swap) and
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) or
+[Gatus](https://github.com/TwiN/gatus) for uptime. Nothing in the gate forces a paid
+SaaS.
 
 It's the follow-on to a deploy: **ship → `/last-90` → confident it's set up properly.**
 

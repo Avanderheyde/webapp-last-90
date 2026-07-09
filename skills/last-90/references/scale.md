@@ -29,7 +29,7 @@ Each criterion is tagged:
 | 3 | **Authorization / tenant isolation** | Supabase: RLS enabled on **every** table. SQLite/levels.io: every table has an owner column and every query filters by the authed user, centralized so it can't be forgotten. Proven: user A cannot read user B's row. | 🤖 |
 | 4 | **Security hardening** | Server-side input validation on all writes; rate limiting on all mutations; SSRF guard if the app fetches user-supplied URLs; **no secrets in the repo** (`.env` gitignored, `.env.example` present). | 🤖 |
 | 5 | **Legal pages** | Privacy Policy + Terms of Service published and linked in the footer; cookie/consent notice if you set non-essential cookies; a real contact address. | 🤖 (draft) / 🙋 (contact + approval) |
-| 6 | **Error monitoring** | Sentry (or equivalent) live in **production**, plus a global error boundary that reports and shows a recovery UI. | 🤖 (wiring) / 🙋 (DSN) |
+| 6 | **Error monitoring** | An error tracker live in **production**, plus a global error boundary that reports and shows a recovery UI. Open source first: self-hosted **Bugsink** (single box, SQLite) or **GlitchTip** — both speak the Sentry SDK protocol, so the wiring is identical to hosted Sentry; only the DSN differs. | 🤖 (wiring) / 🙋 (DSN / where it runs) |
 | 7 | **UGC moderation** *(only if the app accepts user-generated content)* | Report/flag mechanism on user content + a way to action reports. N/A if no UGC — mark ⏭️ N/A. | 🤖 |
 | 8 | **CI/CD** | CI runs build + tests on every PR/push so a broken commit can't reach prod. | 🤖 (workflow file) / 🙋 (enable Actions + secrets) |
 | 9 | **Health check** | `/api/health` (or `/healthz`) that pings the DB and returns 200/503. | 🤖 |
@@ -64,7 +64,10 @@ rank → use a window function); pagination on feeds/comments; ranking/heavy wor
 in SQL not JS; `next/image` over raw `<img>`. 🤖
 
 **5. Observability** — Error tracking + **uptime monitoring pinging /health** +
-alert rules + structured logging. 🤖 (logging) / 🙋 (uptime account + alerts)
+alert rules + structured logging. Uptime: open source first — self-hosted
+**Uptime Kuma** or **Gatus** (must run somewhere *other than* the app box: a home
+server, second VPS, or free tier of a hosted pinger). 🤖 (logging) / 🙋 (where the
+monitor runs + alerts)
 
 **6. Data protection** — Encryption at rest, no PII in logs, account deletion
 (GDPR erasure), data export (portability), backup tested. 🤖 (most) / 🙋 (DPA/legal)

@@ -95,8 +95,12 @@ detected app actually needs. Typical set for a launching web app:
 
 - **Repo + CI/CD** — push access + permission to enable GitHub Actions and add
   repo secrets (so CI can build/test on every PR).
-- **Error monitoring** — Sentry DSN (or approval to create the project).
-- **Uptime monitoring** — UptimeRobot / BetterStack account to ping `/health`.
+- **Error monitoring** — a DSN from an error tracker. Open source first:
+  self-hosted **Bugsink** (single box, SQLite) or **GlitchTip**; hosted Sentry if
+  preferred. All speak the Sentry SDK protocol — same wiring, different DSN.
+- **Uptime monitoring** — somewhere to ping `/health` from, *off the app box*:
+  self-hosted **Uptime Kuma** or **Gatus** (home server / second box), or a
+  hosted pinger (UptimeRobot / BetterStack) if they'd rather not run one.
 - **Backups** — backup target (Cloudflare R2 bucket / Supabase paid tier) and a
   green light to rehearse a restore.
 - **Auth providers** — OAuth client IDs/secrets for any social login.
