@@ -141,6 +141,11 @@ When the gate is 10/10 (or remaining items are owner-deferred), output:
 
 ## Guardrails
 - Never invent a secret, DSN, or credential. Blocked → 🙋, not a guess.
+- Commit and deploy from a CLEAN checkout of the commit (git worktree), never
+  the working tree — it may hold unrelated WIP, and rsync-style deploy scripts
+  will ship it (including un-reviewed DB migrations). If a shared file (e.g.
+  the server-actions module) entangles your changes with WIP, split the commit
+  so the committed tree builds standalone; prove it by building the worktree.
 - Stay faithful to the detected stack's idioms (RLS for Supabase; centralized
   owner-column filtering for SQLite — there is no RLS in SQLite).
 - Surgical changes — this is a finishing pass on a working app, not a refactor.
