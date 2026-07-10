@@ -35,7 +35,9 @@ starts there. It also handles the managed path (Vercel + Supabase + Sentry).
 Detect the stack; don't assume one.
 
 The graded checklist this skill works against lives in
-[`references/scale.md`](references/scale.md) — read it at the start of every run.
+[`references/scale.md`](references/scale.md); the deep end-to-end audit it scores
+against lives in [`references/audit-prompt.md`](references/audit-prompt.md). Read
+both at the start of every run.
 
 ## Operating contract (this is a goal, not a one-shot)
 
@@ -83,9 +85,14 @@ user-generated content, whether it takes payments. This decides which criteria
 are 🤖 vs 🙋 and which are N/A (e.g. UGC moderation).
 
 ### 2. Baseline score (report before touching anything)
-Grade the app against the full scale. Output the headline **Launch Gate N/10**,
-each dimension's grade with one line of evidence, and split every gap into:
-- 🤖 **Autonomous queue** — what you'll do now, no input needed.
+Grade the app against the full scale, using the deep pre-launch audit in
+[`references/audit-prompt.md`](references/audit-prompt.md) to score the
+dimensions — trace real user flows end-to-end (security, concurrency/idempotency,
+reliability, accessibility, visual consistency), don't skim files. Output the
+headline **Launch Gate N/10**, each dimension's grade with one line of evidence,
+and split every gap into:
+- 🤖 **Autonomous queue** — what you'll do now, no input needed. The audit's
+  "quick wins" feed straight into this.
 - 🙋 **Needs-human queue** — what's blocked on an account/secret/decision.
 
 ### 3. Access & Connections Intake (the ONE upfront check-in)
@@ -133,7 +140,9 @@ finish those items. Don't trickle one-at-a-time interruptions.
 
 ### 6. Final report
 When the gate is 10/10 (or remaining items are owner-deferred), output:
-- **Verdict:** SHIP-SAFE / NOT-YET (per the verdict rule in the scale).
+- **Verdict:** a release recommendation — **Safe to ship** / **Ship with known
+  risks** / **Do not ship** (per the verdict rule in the scale), with one line of
+  justification.
 - **Launch Gate:** 10/10 with each blocker's evidence.
 - **Dimensions:** grade table.
 - **Deferred:** anything the owner chose to skip, with the residual risk named.

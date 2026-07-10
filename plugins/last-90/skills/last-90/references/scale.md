@@ -41,8 +41,10 @@ Each criterion is tagged:
 
 ## Dimensions (graded depth)
 
-For each: state the grade, one line of evidence, and the single highest-value
-next action.
+Grade these off the **deep pre-launch audit** in
+[`references/audit-prompt.md`](audit-prompt.md) — trace real user flows
+end-to-end, don't read files in isolation. For each dimension: state the grade,
+one line of evidence, and the single highest-value next action.
 
 **0. MVP audit** — Stack, dependency count, table/route inventory, env config is
 clean (no hardcoded URLs, 3-tier local/preview/prod). 🤖
@@ -51,9 +53,13 @@ clean (no hardcoded URLs, 3-tier local/preview/prod). 🤖
 security headers (CSP/HSTS/X-Frame/X-Content-Type/Referrer/Permissions). Note
 gaps: CSRF posture, key rotation, CSP report-uri. 🤖
 
-**2. Failure modes** — What happens when the DB is down, a token expires, a rate
-limit hits, a payload is huge, an unhandled error throws? Graceful degradation +
-retry where cheap. 🤖
+**2. Failure modes & concurrency** — What happens when the DB is down, a token
+expires, a rate limit hits, a payload is huge, an unhandled error throws?
+Graceful degradation + retry where cheap. **Plus state integrity — the class
+vibe apps ship broken:** are mutations **idempotent** (no double payment/booking/
+signup from a double-click, retry, or concurrent request)? Stale state, lost
+updates, out-of-order async, uncleaned effects/subscriptions/timers, cache
+invalidation, and actions left live while an op is in flight. 🤖
 
 **3. Unit economics** — Monthly cost at launch and at 1K/10K/100K users; where
 the first bottleneck/bill spike is (usually no caching → every request hits the
@@ -72,8 +78,15 @@ monitor runs + alerts)
 **6. Data protection** — Encryption at rest, no PII in logs, account deletion
 (GDPR erasure), data export (portability), backup tested. 🤖 (most) / 🙋 (DPA/legal)
 
-**7. UX resilience** — Loading/skeleton states, error/empty states, client-side
-validation feedback, server-side search if the list grows, mobile layout. 🤖
+**7. UX resilience, accessibility & consistency** — Loading/skeleton, error,
+empty, offline, timeout, partial-success states; client-side validation
+feedback. **Accessibility (target WCAG 2.2 AA):** semantic HTML, keyboard nav +
+visible focus, accessible names/ARIA, colour contrast, touch targets, reduced
+motion, screen-reader behaviour for modals/menus/toasts/validation. **Visual
+consistency:** design tokens + shared components, every interactive state
+(hover/focus/active/disabled/loading/success/warning/destructive/error), no
+layout shift/overflow/truncation, consistent copy. Edge cases: long text, empty
+values, huge datasets, narrow/zoomed/large-text viewports. 🤖
 
 **8. Legal & risk** — Privacy + ToS + consent (gate items) plus DMCA/takedown
 path and content-ownership terms if you host user content. 🤖 (draft) / 🙋 (review)
@@ -90,7 +103,17 @@ box comes back after reboot (systemd brings up app + Caddy + Litestream). 🤖
 
 ## Verdict rule
 
-Report **SHIP-SAFE** only when: Launch Gate = 10/10 (N/A items excused) **and**
-no dimension is `❌ Missing`. `🟡 Partial` is allowed only if the owner has seen
-it and accepted the residual risk. `⏭️ Deferred` requires an explicit owner
-decision, recorded in the report with the reason.
+Close every run with a one-line **release recommendation**:
+
+- **Safe to ship** — Launch Gate = 10/10 (N/A items excused) **and** no dimension
+  is `❌ Missing`. (This is the SHIP-SAFE verdict.)
+- **Ship with known risks** — gate is 10/10 but open `🟡 Partial` items remain
+  that the owner has seen and accepted; list each residual risk. Use this when
+  the app is launchable but not spotless.
+- **Do not ship** — any Launch Gate blocker fails or any dimension is
+  `❌ Missing`. (This is NOT-YET.)
+
+`🟡 Partial` counts as accepted only once the owner has seen it. `⏭️ Deferred`
+requires an explicit owner decision, recorded with the reason. Every audit
+finding (per `references/audit-prompt.md`) that stays open must map to one of
+these three tiers — never silently pass.
