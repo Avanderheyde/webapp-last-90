@@ -157,7 +157,7 @@ When the gate is 10/10 (or remaining items are owner-deferred), output:
 ## Goal block (paste into `/goal`, or `/last-90` runs it for you)
 
 > **Goal:** Make this deployed web app ship-safe by completing every item in the
-> Last 90 scale (`~/.claude/skills/last-90/references/scale.md`). Detect the stack,
+> Last 90 scale (this skill's `references/scale.md`). Detect the stack,
 > score the Launch Gate (target 10/10) and the 11 dimensions, then loop:
 > implement and deterministically verify every 🤖 Autonomous item without asking.
 > Up front, run the Access & Connections Intake once to learn which 🙋 services I
