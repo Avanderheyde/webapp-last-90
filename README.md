@@ -52,7 +52,7 @@ Stack-aware (works for VPS+SQLite+Litestream *or* Vercel+Supabase+Sentry), not l
 /plugin install last-90@webapp-last-90
 ```
 
-**As a plain skill:** copy `skills/last-90/` into `~/.claude/skills/`.
+**As a plain skill:** copy `plugins/last-90/skills/last-90/` into `~/.claude/skills/`.
 
 ## Use
 
